@@ -1,0 +1,149 @@
+{% extends 'student/studentbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style type="text/css">
+      a:link {
+        text-decoration: none;
+      }
+
+      .order-card {
+        color: rgb(255, 255, 255);
+      }
+
+      .bg-c-blue {
+        background: rgb(245, 144, 66);
+      }
+
+      .bg-c-green {
+        background:rgb(245, 144, 66);
+      }
+
+      .bg-c-yellow {
+        background: rgb(245, 144, 66);
+      }
+
+      .bg-c-pink {
+        background: rgb(245, 144, 66);
+      }
+
+
+      .card {
+
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .card .card-block {
+        padding: 25px;
+      }
+
+      .order-card i {
+        font-size: 26px;
+      }
+
+      .f-left {
+        float: left;
+      }
+
+      .f-right {
+        float: right;
+      }
+      header {
+      left: 0px;
+      right: 0px;
+    }
+    </style>
+  </head>
+<br><br>
+
+  <div class="container">
+    <div class="row">
+
+
+      <div class="col-md-4 col-xl-6">
+        <div class="card bg-c-blue order-card">
+          <div class="card-block">
+            <h6 class="">Available Exams</h6>
+           <h2 class="text-right"><i class="fas fa-book f-left"></i><span>{{total_course}}</span></h2>
+          <h6 class="m-b-20">Total Questions</h6>
+            <h2 class="text-right"><i class="fas fa-question-circle f-left"></i><span>{{total_question}}</span></h2>
+              <a href="graph"><h6 class="m-b-20">Graph</h6></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot container -->
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+      <h5>Need any help?</h5>
+    <input type="text" id="user-input" placeholder="Type a message...">
+    <button id="send-button">Send</button>
+  </div>
+
+   <script>
+        const chatbotResponses = {
+            "hello": "Hello! How can I assist you?",
+            "help": "Sure, I'm here to help. What do you need assistance with?",
+            "question": "Feel free to ask me any questions.",
+            "default": "I'm here to assist you. Please ask a question or request help.",
+            "hi": "hi how is your day ? by the way what can i do for you?",
+            "help me": "yeah im here to do that ?"
+        };
+
+        function appendMessage(sender, message) {
+            const chatMessages = document.getElementById("chat-messages");
+            const messageDiv = document.createElement("div");
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function processUserInput(userMessage) {
+            userMessage = userMessage.toLowerCase();
+            let chatbotResponse = chatbotResponses[userMessage] || chatbotResponses["default"];
+            appendMessage("You", userMessage);
+            setTimeout(() => appendMessage("Chatbot", chatbotResponse), 500);
+        }
+
+        document.getElementById("send-button").addEventListener("click", () => {
+            const userMessage = document.getElementById("user-input").value;
+            processUserInput(userMessage);
+            document.getElementById("user-input").value = "";
+        });
+
+        document.getElementById("user-input").addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                const userMessage = document.getElementById("user-input").value;
+                processUserInput(userMessage);
+                document.getElementById("user-input").value = "";
+            }
+        });
+       (function(d, m){
+        var kommunicateSettings =
+            {"appId":"3631a8d4b614016a7bac6c1e66b28df31","popupWidget":true,"automaticChatOpenOnNavigation":true};
+        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+        s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+        var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+        window.kommunicate = m; m._globals = kommunicateSettings;
+    })(document, window.kommunicate || {});
+    </script>
+
+</body>
+</html>
+{% endblock content %}
+</html>
